@@ -1,57 +1,39 @@
-const readline = require("node:readline");
 const fs = require("node:fs/promises");
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-});
-
-
+const process = require('process');
 
 async function program() {
+    const args = process.argv;
 
-    var opcion = 0;
-    do {
-        console.log("Menu");
-        console.log("1. Agregar una tarea");
-        console.log("2. Ver todas las tareas");
-        console.log("5. Salir del programa");
+    switch (args[2]) {
+        case "add":
+            console.clear();
+            await addTask(args[3]);
+            break;
 
-        opcion = parseInt(await inputText("Elegí una opción: "));
+        case "list":
+            console.clear();
+            await viewTasks();
+            break;
 
-        switch (opcion) {
-            case 1:
-                console.clear();
-                await addTask();
-                break;
+        case 3:
+            console.clear();
+            console.log("Caso 3");
+            break;
 
-            case 2:
-                console.clear();
-                await viewTasks();
-                break;
+        case 4:
+            console.clear();
+            console.log("Caso 4");
+            break;
 
-            case 3:
-                console.clear();
-                console.log("Caso 3");
-                break;
-
-            case 4:
-                console.clear();
-                console.log("Caso 4");
-                break;
-
-            case 5:
-                console.clear();
-                rl.close();
-                break;
-        }
-    } while (opcion != 5);
+        case 5:
+            console.clear();
+            break;
+    }
 }
 
 
 
-async function addTask() {
-    const description = await inputText("Agregue la descripcion de la tarea: ");
+async function addTask(description) {
     const tasks = await loadTasks();
     const newId = getNextId(tasks);
 
@@ -87,14 +69,6 @@ async function loadTasks() {
 async function saveTasks(tasks) {
     const text = JSON.stringify(tasks, null, 2);
     await fs.writeFile("tasks.json", text);
-}
-
-function inputText(text) {
-    return new Promise((resolve) => {
-        rl.question(text, (response) => {
-            resolve(response);
-        });
-    });
 }
 
 function createTask(id, description) {

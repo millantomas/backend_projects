@@ -33,5 +33,12 @@
     "status": "todo",
     "createdAt": "2026-07-08T13:55:23.479Z",
     "updatedAt": "2026-07-08T13:55:23.479Z"
+  },
+  {
+    "id": 6,
+    "description": "Comprar leche",
+    "status": "todo",
+    "createdAt": "2026-07-08T15:57:56.988Z",
+    "updatedAt": "2026-07-08T15:57:56.988Z"
   }
 ]
