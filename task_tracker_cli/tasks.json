@@ -26,5 +26,12 @@
     "status": "todo",
     "createdAt": "2026-07-08T12:47:28.598Z",
     "updatedAt": "2026-07-08T12:47:28.598Z"
+  },
+  {
+    "id": 5,
+    "description": "Nueva tarea",
+    "status": "todo",
+    "createdAt": "2026-07-08T13:55:23.479Z",
+    "updatedAt": "2026-07-08T13:55:23.479Z"
   }
 ]
