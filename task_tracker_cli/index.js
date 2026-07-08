@@ -3,7 +3,6 @@ const process = require('process');
 
 async function program() {
     const args = process.argv;
-
     switch (args[2]) {
         case "add":
             console.clear();
@@ -15,22 +14,28 @@ async function program() {
             await viewTasks();
             break;
 
-        case 3:
+        case "update":
             console.clear();
-            console.log("Caso 3");
+            await updateTask(
+                Number(args[3]),
+                args[4]
+            );
+            break;
+        case "delete":
+            console.clear();
+            await deleteTask(Number(args[3]));
+            break;
+        case "mark-done":
+            console.clear();
+            await doneTask(Number(args[3]));
+            break;
+        case "mark-in-progress":
+            console.clear();
+            await progressTask(Number(args[3]));
             break;
 
-        case 4:
-            console.clear();
-            console.log("Caso 4");
-            break;
-
-        case 5:
-            console.clear();
-            break;
     }
 }
-
 
 
 async function addTask(description) {
@@ -71,6 +76,56 @@ async function saveTasks(tasks) {
     await fs.writeFile("tasks.json", text);
 }
 
+async function updateTask(id, newDescription) {
+    const tasks = await loadTasks();
+    const task = tasks.find(task => task.id === id);
+    if (!task) {
+        console.log("No existe esa tarea");
+        return;
+    }
+    task.description = newDescription;
+    task.updatedAt = new Date().toISOString();
+    await saveTasks(tasks);
+}
+
+async function deleteTask(id) {
+    const tasks = await loadTasks();
+
+    const filteredTasks = tasks.filter(task => task.id !== id);
+    if (filteredTasks.length === tasks.length) {
+        console.log("No existe una tarea con ese ID.");
+        return;
+    }
+    console.log("Tarea eliminada con exito!");
+    await saveTasks(filteredTasks);
+}
+
+async function doneTask(id) {
+    const tasks = await loadTasks();
+
+    const task = tasks.find(task => task.id === id);
+    if (!task) {
+        console.log("No existe esa tarea");
+        return;
+    }
+    task.status = "done";
+    console.log(`La tarae ${task.description} se marco como Done!`);
+    await saveTasks(tasks);
+}
+
+async function progressTask(id) {
+    const tasks = await loadTasks();
+
+    const task = tasks.find(task => task.id === id);
+    if (!task) {
+        console.log("No existe esa tarea");
+        return;
+    }
+    task.status = "in-progress";
+    console.log(`La tarae ${task.description} se marco como in progress!`);
+    await saveTasks(tasks);
+}
+
 function createTask(id, description) {
     const timeNow = new Date().toISOString();
 
@@ -90,5 +145,7 @@ function getNextId(tasks) {
 
     return tasks[tasks.length - 1].id + 1;
 }
+
+
 
 program();
