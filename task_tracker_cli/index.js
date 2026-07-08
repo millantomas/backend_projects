@@ -11,7 +11,7 @@ async function program() {
 
         case "list":
             console.clear();
-            await viewTasks();
+            await viewTasks(args[3]);
             break;
 
         case "update":
@@ -33,7 +33,6 @@ async function program() {
             console.clear();
             await progressTask(Number(args[3]));
             break;
-
     }
 }
 
@@ -49,7 +48,7 @@ async function addTask(description) {
     await saveTasks(tasks);
 }
 
-async function viewTasks() {
+async function viewTasks(status) {
     const tasks = await loadTasks();
 
     if (tasks.length === 0) {
@@ -57,9 +56,16 @@ async function viewTasks() {
         return;
     }
 
+    if (status) {
+        const task = tasks.filter(task => task.status === status);
+        task.forEach(element => {
+            console.log(`ID: ${element.id} - Tarea: ${element.description} Estado: [${element.status}]`);
+        })
+        return;
+    }
     tasks.forEach(element => {
         console.log(`ID: ${element.id} - Tarea: ${element.description} Estado: [${element.status}]`);
-    });
+    })
 }
 
 async function loadTasks() {
@@ -125,6 +131,9 @@ async function progressTask(id) {
     console.log(`La tarae ${task.description} se marco como in progress!`);
     await saveTasks(tasks);
 }
+
+
+
 
 function createTask(id, description) {
     const timeNow = new Date().toISOString();

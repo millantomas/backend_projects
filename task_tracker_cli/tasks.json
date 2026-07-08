@@ -23,7 +23,7 @@
   {
     "id": 5,
     "description": "Nueva tarea",
-    "status": "in-progress",
+    "status": "done",
     "createdAt": "2026-07-08T13:55:23.479Z",
     "updatedAt": "2026-07-08T13:55:23.479Z"
   }
