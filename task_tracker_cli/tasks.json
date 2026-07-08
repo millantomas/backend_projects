@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "description": "esto es una prueba!",
+    "status": "todo",
+    "createdAt": "2026-07-08T12:45:03.145Z",
+    "updatedAt": "2026-07-08T12:45:03.145Z"
+  },
+  {
+    "id": 2,
+    "description": "esto es otra prueba!",
+    "status": "todo",
+    "createdAt": "2026-07-08T12:45:12.788Z",
+    "updatedAt": "2026-07-08T12:45:12.788Z"
+  },
+  {
+    "id": 3,
+    "description": "Nueva prueba!",
+    "status": "todo",
+    "createdAt": "2026-07-08T12:46:12.487Z",
+    "updatedAt": "2026-07-08T12:46:12.487Z"
+  },
+  {
+    "id": 4,
+    "description": "New task",
+    "status": "todo",
+    "createdAt": "2026-07-08T12:47:28.598Z",
+    "updatedAt": "2026-07-08T12:47:28.598Z"
+  }
+]
