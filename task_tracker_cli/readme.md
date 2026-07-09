@@ -1,1 +1,4 @@
-working 
+- Mejorar viewTasks() para evitar duplicación.
+- Agregar ayuda para comandos inválidos.
+- Escribir README.
+- Revisar getNextId() para hacerlo más robusto.

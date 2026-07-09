@@ -13,7 +13,6 @@ async function program() {
             console.clear();
             await viewTasks(args[3]);
             break;
-
         case "update":
             console.clear();
             await updateTask(
@@ -26,12 +25,9 @@ async function program() {
             await deleteTask(Number(args[3]));
             break;
         case "mark-done":
-            console.clear();
-            await doneTask(Number(args[3]));
-            break;
         case "mark-in-progress":
             console.clear();
-            await progressTask(Number(args[3]));
+            await updateStatus(Number(args[3]), args[2]);
             break;
     }
 }
@@ -106,31 +102,21 @@ async function deleteTask(id) {
     await saveTasks(filteredTasks);
 }
 
-async function doneTask(id) {
+async function updateStatus(id, status) {
     const tasks = await loadTasks();
-
+    const newStatus = status.replace("mark-", "");
     const task = tasks.find(task => task.id === id);
     if (!task) {
         console.log("No existe esa tarea");
         return;
     }
-    task.status = "done";
-    console.log(`La tarae ${task.description} se marco como Done!`);
+
+    task.status = newStatus;
+    task.updatedAt = new Date().toISOString();
+    console.log(`La tarea ${task.description} se marco como ${newStatus}`);
     await saveTasks(tasks);
 }
 
-async function progressTask(id) {
-    const tasks = await loadTasks();
-
-    const task = tasks.find(task => task.id === id);
-    if (!task) {
-        console.log("No existe esa tarea");
-        return;
-    }
-    task.status = "in-progress";
-    console.log(`La tarae ${task.description} se marco como in progress!`);
-    await saveTasks(tasks);
-}
 
 
 
