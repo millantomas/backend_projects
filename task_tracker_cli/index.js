@@ -1,5 +1,6 @@
 const fs = require("node:fs/promises");
 const process = require('process');
+const VALID_STATUS = ["todo", "done", "in-progress"];
 
 async function program() {
     const args = process.argv;
@@ -29,6 +30,9 @@ async function program() {
             console.clear();
             await updateStatus(Number(args[3]), args[2]);
             break;
+        default:
+            console.log("Comando invalido");
+            break;
     }
 }
 
@@ -46,6 +50,7 @@ async function addTask(description) {
 
 async function viewTasks(status) {
     const tasks = await loadTasks();
+    let tasksToShow = tasks;
 
     if (tasks.length === 0) {
         console.log("No hay tareas registradas.");
@@ -53,16 +58,21 @@ async function viewTasks(status) {
     }
 
     if (status) {
-        const task = tasks.filter(task => task.status === status);
-        task.forEach(element => {
-            console.log(`ID: ${element.id} - Tarea: ${element.description} Estado: [${element.status}]`);
-        })
-        return;
+        if (!VALID_STATUS.includes(status)) {
+            console.log("Estado inválido.");
+            return;
+        }
+
+        tasksToShow = tasks.filter(task => task.status === status);
     }
-    tasks.forEach(element => {
-        console.log(`ID: ${element.id} - Tarea: ${element.description} Estado: [${element.status}]`);
-    })
+
+    tasksToShow.forEach(task => {
+        console.log(
+            `ID: ${task.id} - Tarea: ${task.description} Estado: [${task.status}]`
+        );
+    });
 }
+
 
 async function loadTasks() {
     try {
