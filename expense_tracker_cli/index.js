@@ -13,16 +13,17 @@ async function main() {
                 Number(parsed.options.amount)
             );
             break;
-
         case "list":
             await listExpenses();
             break;
-
         case "delete":
             await deleteExpense(Number(parsed.options.id));
             break;
         case "update":
             await updateExpense(Number(parsed.options.id), parsed.options.description, Number(parsed.options.amount));
+            break;
+        case "summary":
+            await summary(parsed.options.month);
             break;
         default:
             console.log("Invalid command");
@@ -135,3 +136,36 @@ async function listExpenses() {
     });
 }
 
+async function summary(month) {
+    const expenses = await loadExpenses();
+
+    let expensesToSum = expenses;
+
+    if (month !== undefined) {
+        const monthNumber = Number(month);
+
+        if (
+            Number.isNaN(monthNumber) ||
+            monthNumber < 1 ||
+            monthNumber > 12
+        ) {
+            console.log("Mes inválido. Debe estar entre 1 y 12.");
+            return;
+        }
+
+        expensesToSum = expenses.filter(expense => {
+            return new Date(expense.createdAt).getMonth() + 1 === monthNumber;
+        });
+    }
+
+    const total = expensesToSum.reduce(
+        (sum, expense) => sum + expense.amount,
+        0
+    );
+
+    if (month !== undefined) {
+        console.log(`Total expenses for month ${month}: $${total}`);
+    } else {
+        console.log(`Total expenses: $${total}`);
+    }
+}
