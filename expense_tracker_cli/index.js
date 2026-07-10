@@ -21,7 +21,9 @@ async function main() {
         case "delete":
             await deleteExpense(Number(parsed.options.id));
             break;
-
+        case "update":
+            await updateExpense(Number(parsed.options.id), parsed.options.description, Number(parsed.options.amount));
+            break;
         default:
             console.log("Invalid command");
     }
@@ -87,3 +89,29 @@ async function loadExpenses() {
         return [];
     }
 }
+
+async function updateExpense(id, newDescription, newAmount) {
+    const expenses = await loadExpenses();
+    const expense = expenses.find(expense => expense.id === id);
+    if (!expense) {
+        console.log("No existe esta expense");
+        return;
+    }
+    expense.description = newDescription;
+    expense.amount = newAmount;
+    expense.updatedAt = new Date().toISOString();
+    await saveExpense(expenses);
+}
+
+async function deleteExpense(id) {
+    const expenses = await loadExpenses();
+
+    const filteredExpenses = expenses.filter(expense => expense.id !== id);
+    if (filteredExpenses.length === expenses.length) {
+        console.log("No existe un expense con ese ID.");
+        return;
+    }
+    console.log("Expenses eliminada con exito!");
+    await saveExpense(filteredExpenses);
+}
+
