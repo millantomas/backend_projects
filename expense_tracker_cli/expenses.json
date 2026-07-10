@@ -13,9 +13,10 @@
   },
   {
     "id": 4,
-    "description": "Lunch",
-    "amount": 20,
-    "createdAt": "2026-07-10T21:08:56.585Z"
+    "description": "Me quiero morir",
+    "amount": 1000,
+    "createdAt": "2026-07-10T21:08:56.585Z",
+    "updatedAt": "2026-07-10T21:35:38.468Z"
   },
   {
     "id": 5,

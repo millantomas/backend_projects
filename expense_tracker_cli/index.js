@@ -115,3 +115,23 @@ async function deleteExpense(id) {
     await saveExpense(filteredExpenses);
 }
 
+async function listExpenses() {
+    const expenses = await loadExpenses();
+
+    if (expenses.length === 0) {
+        console.log("No hay expenses registradas.");
+        return;
+    }
+
+    console.log("ID  Date        Description        Amount");
+
+    expenses.forEach(expense => {
+        console.log(
+            `${String(expense.id).padEnd(4)}` +
+            `${expense.createdAt.slice(0, 10).padEnd(12)}` +
+            `${expense.description.padEnd(20)}` +
+            `$${expense.amount}`
+        );
+    });
+}
+
