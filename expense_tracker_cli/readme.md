@@ -1,32 +1,26 @@
-# GitHub Activity CLI
+# Expense Tracker CLI
 
-A simple command-line application built with **Node.js** that fetches a GitHub user's recent public activity using the GitHub REST API and displays it in a human-readable format.
+A simple command-line expense tracker built with **Node.js** to record, manage, and summarize personal expenses.
 
-This project was built as part of the **GitHub User Activity** challenge from roadmap.sh to practice working with APIs, asynchronous JavaScript, JSON data, and building CLI applications without external dependencies.
+This project was built as part of the **Expense Tracker** challenge from roadmap.sh to practice working with command-line applications, file persistence, argument parsing, and application logic without relying on external libraries.
 
 ## Features
 
-* Fetches the recent public activity of any GitHub user.
-* Displays different event types in a readable format.
-* Supports:
-
-  * Push events
-  * Issues
-  * Pull requests
-  * Repository creation
-  * Repository deletion
-  * Forks
-  * Stars
-  * Member events
-* Handles invalid usernames and API errors gracefully.
-* Uses only Node.js built-in features (no external libraries).
+* Add new expenses.
+* Update existing expenses.
+* Delete expenses.
+* List all recorded expenses.
+* Display the total amount of all expenses.
+* Display a monthly summary of expenses.
+* Store data locally in a JSON file.
+* Handle invalid input and common edge cases.
 
 ## Technologies
 
 * Node.js
 * JavaScript (ES2023+)
-* GitHub REST API
-* Fetch API
+* File System (`fs/promises`)
+* Command Line Interface (CLI)
 
 ## Installation
 
@@ -34,38 +28,65 @@ Clone the repository:
 
 ```bash
 git clone <repository-url>
-cd github_activity_cli
+cd expense_tracker_cli
 ```
 
 No additional dependencies are required.
 
 ## Usage
 
-Run the application by providing a GitHub username:
+### Add an expense
 
 ```bash
-node index.js <github-username>
+node index.js add --description "Lunch" --amount 20
 ```
 
-Example:
+### Update an expense
 
 ```bash
-node index.js millantomas
+node index.js update --id 1 --description "Lunch with coworkers" --amount 25
 ```
 
-Example output:
+### Delete an expense
+
+```bash
+node index.js delete --id 1
+```
+
+### List all expenses
+
+```bash
+node index.js list
+```
+
+### Display total expenses
+
+```bash
+node index.js summary
+```
+
+### Display monthly summary
+
+```bash
+node index.js summary --month 8
+```
+
+## Example Output
 
 ```text
-- Pushed commits to millantomas/backend_projects
-- Created branch "main" in millantomas/backend_projects
-- Starred some-user/example-repository
-- Opened a pull request in another-user/project
+Expense added successfully (ID: 1)
+
+ID  Date        Description   Amount
+1   2026-07-10  Lunch         $20
+
+Total expenses: $20
 ```
 
 ## Project Structure
 
 ```text
 .
+├── expenses.json
 ├── index.js
 └── README.md
 ```
@@ -74,27 +95,29 @@ Example output:
 
 During this project I worked on:
 
-* Consuming REST APIs using `fetch()`.
-* Using `async` / `await`.
-* Parsing JSON responses.
-* Working with command-line arguments using `process.argv`.
-* Formatting API responses into readable output.
-* Basic error handling for failed requests and invalid users.
-* Organizing code into small, reusable functions.
+* Parsing command-line arguments.
+* Building a CLI application.
+* Reading and writing JSON files.
+* Working with asynchronous file operations.
+* Validating user input.
+* Managing collections of data.
+* Separating application logic into reusable functions.
+* Handling common edge cases and errors.
 
-## Possible Improvements
+## Future Improvements
 
-Some ideas for future versions:
+Some ideas for future versions include:
 
-* Filter activities by event type.
-* Display timestamps for each event.
-* Add colors to terminal output.
-* Cache API responses to reduce requests.
-* Support additional GitHub API endpoints.
-* Improve output formatting with tables or grouped events.
+* Expense categories.
+* Monthly budgets.
+* CSV export.
+* Sorting by date or amount.
+* Search by description.
+* Colored terminal output.
+* Better table formatting.
 
 ## Acknowledgements
 
-This project is based on the **GitHub User Activity** challenge from roadmap.sh.
+This project is based on the **Expense Tracker** challenge from roadmap.sh.
 
-https://roadmap.sh/projects/github-user-activity
+https://roadmap.sh/projects/expense-tracker
